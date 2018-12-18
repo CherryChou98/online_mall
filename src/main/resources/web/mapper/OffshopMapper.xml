@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.mapper.OffshopMapper">
+  <resultMap id="BaseResultMap" type="web.entity.Offshop">
+    <id column="OFFSHOP_ID" jdbcType="INTEGER" property="offshopId" />
+    <id column="SHOP_ID" jdbcType="INTEGER" property="shopId" />
+    <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId" />
+    <result column="OFFSHOP_DATE" jdbcType="DATE" property="offshopDate" />
+    <result column="OFFSHOP_TIME" jdbcType="INTEGER" property="offshopTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OFFSHOP_ID, SHOP_ID, ADMIN_ID, OFFSHOP_DATE, OFFSHOP_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="web.entity.OffshopKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from offshop
+    where OFFSHOP_ID = #{offshopId,jdbcType=INTEGER}
+      and SHOP_ID = #{shopId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="web.entity.OffshopKey">
+    delete from offshop
+    where OFFSHOP_ID = #{offshopId,jdbcType=INTEGER}
+      and SHOP_ID = #{shopId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="web.entity.Offshop">
+    insert into offshop (OFFSHOP_ID, SHOP_ID, ADMIN_ID, 
+      OFFSHOP_DATE, OFFSHOP_TIME)
+    values (#{offshopId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, 
+      #{offshopDate,jdbcType=DATE}, #{offshopTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="web.entity.Offshop">
+    insert into offshop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="offshopId != null">
+        OFFSHOP_ID,
+      </if>
+      <if test="shopId != null">
+        SHOP_ID,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="offshopDate != null">
+        OFFSHOP_DATE,
+      </if>
+      <if test="offshopTime != null">
+        OFFSHOP_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="offshopId != null">
+        #{offshopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="offshopDate != null">
+        #{offshopDate,jdbcType=DATE},
+      </if>
+      <if test="offshopTime != null">
+        #{offshopTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="web.entity.Offshop">
+    update offshop
+    <set>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="offshopDate != null">
+        OFFSHOP_DATE = #{offshopDate,jdbcType=DATE},
+      </if>
+      <if test="offshopTime != null">
+        OFFSHOP_TIME = #{offshopTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where OFFSHOP_ID = #{offshopId,jdbcType=INTEGER}
+      and SHOP_ID = #{shopId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="web.entity.Offshop">
+    update offshop
+    set ADMIN_ID = #{adminId,jdbcType=INTEGER},
+      OFFSHOP_DATE = #{offshopDate,jdbcType=DATE},
+      OFFSHOP_TIME = #{offshopTime,jdbcType=INTEGER}
+    where OFFSHOP_ID = #{offshopId,jdbcType=INTEGER}
+      and SHOP_ID = #{shopId,jdbcType=INTEGER}
+  </update>
+</mapper>

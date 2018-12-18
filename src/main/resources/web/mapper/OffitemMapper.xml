@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.mapper.OffitemMapper">
+  <resultMap id="BaseResultMap" type="web.entity.Offitem">
+    <id column="OFFITEM_ID" jdbcType="INTEGER" property="offitemId" />
+    <id column="ITEM_ID" jdbcType="INTEGER" property="itemId" />
+    <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId" />
+    <result column="OFFITEM_DATE" jdbcType="DATE" property="offitemDate" />
+    <result column="OFFITEM_TIME" jdbcType="INTEGER" property="offitemTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    OFFITEM_ID, ITEM_ID, ADMIN_ID, OFFITEM_DATE, OFFITEM_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="web.entity.OffitemKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from offitem
+    where OFFITEM_ID = #{offitemId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="web.entity.OffitemKey">
+    delete from offitem
+    where OFFITEM_ID = #{offitemId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="web.entity.Offitem">
+    insert into offitem (OFFITEM_ID, ITEM_ID, ADMIN_ID, 
+      OFFITEM_DATE, OFFITEM_TIME)
+    values (#{offitemId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, 
+      #{offitemDate,jdbcType=DATE}, #{offitemTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="web.entity.Offitem">
+    insert into offitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="offitemId != null">
+        OFFITEM_ID,
+      </if>
+      <if test="itemId != null">
+        ITEM_ID,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="offitemDate != null">
+        OFFITEM_DATE,
+      </if>
+      <if test="offitemTime != null">
+        OFFITEM_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="offitemId != null">
+        #{offitemId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null">
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="offitemDate != null">
+        #{offitemDate,jdbcType=DATE},
+      </if>
+      <if test="offitemTime != null">
+        #{offitemTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="web.entity.Offitem">
+    update offitem
+    <set>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="offitemDate != null">
+        OFFITEM_DATE = #{offitemDate,jdbcType=DATE},
+      </if>
+      <if test="offitemTime != null">
+        OFFITEM_TIME = #{offitemTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where OFFITEM_ID = #{offitemId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="web.entity.Offitem">
+    update offitem
+    set ADMIN_ID = #{adminId,jdbcType=INTEGER},
+      OFFITEM_DATE = #{offitemDate,jdbcType=DATE},
+      OFFITEM_TIME = #{offitemTime,jdbcType=INTEGER}
+    where OFFITEM_ID = #{offitemId,jdbcType=INTEGER}
+      and ITEM_ID = #{itemId,jdbcType=INTEGER}
+  </update>
+</mapper>
