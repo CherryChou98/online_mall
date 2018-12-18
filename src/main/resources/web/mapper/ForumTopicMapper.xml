@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="web.mapper.ForumTopicMapper">
+  <resultMap id="BaseResultMap" type="web.entity.ForumTopic">
+    <id column="FORUM_TOPIC_ID" jdbcType="INTEGER" property="forumTopicId" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="web.entity.ForumTopic">
+    <result column="CONTENT" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    FORUM_TOPIC_ID, USER_ID, TITLE, TIME
+  </sql>
+  <sql id="Blob_Column_List">
+    CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from forum_topic
+    where FORUM_TOPIC_ID = #{forumTopicId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from forum_topic
+    where FORUM_TOPIC_ID = #{forumTopicId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="web.entity.ForumTopic">
+    insert into forum_topic (FORUM_TOPIC_ID, USER_ID, TITLE, 
+      TIME, CONTENT)
+    values (#{forumTopicId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="web.entity.ForumTopic">
+    insert into forum_topic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="forumTopicId != null">
+        FORUM_TOPIC_ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="time != null">
+        TIME,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="forumTopicId != null">
+        #{forumTopicId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="web.entity.ForumTopic">
+    update forum_topic
+    <set>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        TIME = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where FORUM_TOPIC_ID = #{forumTopicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="web.entity.ForumTopic">
+    update forum_topic
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      TITLE = #{title,jdbcType=VARCHAR},
+      TIME = #{time,jdbcType=TIMESTAMP},
+      CONTENT = #{content,jdbcType=LONGVARCHAR}
+    where FORUM_TOPIC_ID = #{forumTopicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="web.entity.ForumTopic">
+    update forum_topic
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      TITLE = #{title,jdbcType=VARCHAR},
+      TIME = #{time,jdbcType=TIMESTAMP}
+    where FORUM_TOPIC_ID = #{forumTopicId,jdbcType=INTEGER}
+  </update>
+</mapper>
